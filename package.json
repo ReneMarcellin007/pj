@@ -1,0 +1,9 @@
+{
+  "name": "ils-vous-ont-menti",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Landing page — Système de prévention des collisions arrière propulsé par l'IA",
+  "dependencies": {
+    "resend": "^4.1.0"
+  }
+}

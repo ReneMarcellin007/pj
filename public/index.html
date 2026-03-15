@@ -1,0 +1,726 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ILS VOUS ONT MENTI — One Humanity, One Project, One Mission</title>
+
+<!-- SEO -->
+<meta name="description" content="Un système de prévention des collisions arrière propulsé par l'intelligence artificielle. Né d'une tragédie réelle. Conçu à Montréal.">
+<meta name="keywords" content="collision arrière, prévention, IA, sécurité routière, Québec, protection véhicule, radar, dashcam">
+<meta name="robots" content="index, follow">
+<link rel="canonical" href="https://ils-vous-ont-menti.vercel.app/">
+
+<!-- Open Graph -->
+<meta property="og:type" content="website">
+<meta property="og:locale" content="fr_CA">
+<meta property="og:title" content="ILS VOUS ONT MENTI — Système de protection arrière IA">
+<meta property="og:description" content="Un autocollant n'a jamais sauvé personne. Découvrez le premier système de prévention des collisions arrière propulsé par l'IA.">
+<meta property="og:image" content="https://ils-vous-ont-menti.vercel.app/img/family.png">
+<meta property="og:url" content="https://ils-vous-ont-menti.vercel.app/">
+
+<!-- Twitter Card -->
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="ILS VOUS ONT MENTI — Système de protection arrière IA">
+<meta name="twitter:description" content="Un autocollant n'a jamais sauvé personne. Découvrez le premier système de prévention des collisions arrière.">
+<meta name="twitter:image" content="https://ils-vous-ont-menti.vercel.app/img/family.png">
+
+<!-- Favicon SVG (fleur-de-lis) -->
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⚜</text></svg>">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Crimson+Pro:ital,wght@0,200;0,300;0,400;0,600;0,700;1,200;1,300&family=JetBrains+Mono:wght@300;400&family=Playfair+Display:ital,wght@0,700;0,900;1,700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --blood: #c41e1e;
+  --blood-glow: #ff2a2a;
+  --blood-dark: #8a1515;
+  --gold: #d4a853;
+  --gold-light: #f0d68a;
+  --ice: #a8c8d8;
+  --noir: #0a0a0a;
+  --deep: #050505;
+  --smoke: #111;
+  --ash: #1e1e1e;
+  --charcoal: #2a2a2a;
+  --ghost: #777;
+  --mist: #999;
+  --bone: #e8e0d0;
+}
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+html { scroll-behavior: smooth; overflow-x: hidden; }
+body {
+  background: var(--deep);
+  color: var(--bone);
+  font-family: 'Crimson Pro', Georgia, serif;
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+}
+::selection { background: var(--blood); color: white; }
+::-webkit-scrollbar { width: 4px; }
+::-webkit-scrollbar-track { background: var(--deep); }
+::-webkit-scrollbar-thumb { background: var(--charcoal); border-radius: 2px; }
+
+/* GRAIN */
+body::after {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.035'/%3E%3C/svg%3E");
+  pointer-events: none;
+  z-index: 9999;
+}
+
+/* CINEMA BARS */
+.cb { position: fixed; left: 0; right: 0; height: 2.5vh; background: #000; z-index: 500; pointer-events: none; }
+.cb.t { top: 0; }
+.cb.b { bottom: 0; }
+
+/* INTRO */
+#intro {
+  position: fixed; inset: 0; background: #000; z-index: 1000;
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  transition: opacity 1.8s ease, visibility 1.8s ease;
+}
+#intro.gone { opacity: 0; visibility: hidden; pointer-events: none; }
+.i1 {
+  font-family: 'Crimson Pro', serif; font-weight: 200; font-style: italic;
+  font-size: clamp(0.85rem, 1.8vw, 1.2rem); color: var(--ghost);
+  letter-spacing: 0.2em; opacity: 0; animation: si 2s 0.8s forwards;
+}
+.i2 {
+  font-family: 'Bebas Neue', sans-serif; font-size: clamp(2.8rem, 9vw, 8rem);
+  color: var(--blood); letter-spacing: 0.06em; margin-top: 1rem; opacity: 0;
+  text-shadow: 0 0 80px rgba(196,30,30,0.4), 0 0 160px rgba(196,30,30,0.15);
+  animation: bi 2.2s 2.8s forwards;
+}
+.i3 { margin-top: 2rem; opacity: 0; animation: si 1s 4.5s forwards; }
+.i3 svg { width: 200px; height: 30px; }
+.i3 path {
+  stroke: var(--blood); stroke-width: 2; fill: none;
+  stroke-dasharray: 500; stroke-dashoffset: 500; animation: dl 1.8s 4.8s forwards;
+}
+@keyframes si { to { opacity: 1; } }
+@keyframes bi {
+  0% { opacity: 0; letter-spacing: 0.25em; transform: scaleY(1.2); }
+  100% { opacity: 1; letter-spacing: 0.06em; transform: scaleY(1); }
+}
+@keyframes dl { to { stroke-dashoffset: 0; } }
+
+/* REVEAL */
+.r { opacity: 0; transform: translateY(35px); transition: opacity 1s cubic-bezier(0.16,1,0.3,1), transform 1s cubic-bezier(0.16,1,0.3,1); }
+.r.v { opacity: 1; transform: none; }
+.d1 { transition-delay: .12s; } .d2 { transition-delay: .24s; } .d3 { transition-delay: .36s; }
+
+/* SHARED */
+section { position: relative; padding: 12vh 8vw; }
+.label { font-family: 'JetBrains Mono', monospace; font-size: 0.65rem; letter-spacing: 0.35em; color: var(--ghost); text-transform: uppercase; margin-bottom: 1.2rem; }
+.bl { width: 50px; height: 2px; background: var(--blood); opacity: 0.5; }
+.bl.c { margin-left: auto; margin-right: auto; }
+
+/* BTN */
+.btn {
+  display: inline-block; padding: 0.95rem 2.2rem;
+  font-family: 'Bebas Neue', sans-serif; font-size: 1.05rem; letter-spacing: 0.18em;
+  text-decoration: none; cursor: pointer; border: none;
+  transition: all 0.35s ease; position: relative; overflow: hidden;
+}
+.btn::after {
+  content: ''; position: absolute; top: 0; left: -100%;
+  width: 100%; height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.08), transparent);
+  transition: left 0.5s;
+}
+.btn:hover::after { left: 100%; }
+.btn-r { background: var(--blood); color: white; }
+.btn-r:hover { background: var(--blood-glow); box-shadow: 0 4px 40px rgba(196,30,30,0.3); transform: translateY(-2px); }
+.btn-g { background: transparent; color: var(--bone); border: 1px solid rgba(255,255,255,0.15); }
+.btn-g:hover { border-color: var(--gold); color: var(--gold); }
+
+/* HERO */
+#hero {
+  min-height: 100vh; display: flex; flex-direction: column; justify-content: flex-end; padding-bottom: 14vh;
+  background: radial-gradient(ellipse at 15% 85%, rgba(196,30,30,0.06) 0%, transparent 55%), linear-gradient(180deg, #000 0%, var(--deep) 100%);
+}
+.ht { font-family: 'Crimson Pro', serif; font-weight: 200; font-style: italic; font-size: clamp(0.95rem, 2vw, 1.3rem); color: var(--mist); letter-spacing: 0.08em; margin-bottom: 1.8rem; }
+.hh { font-family: 'Bebas Neue', sans-serif; font-size: clamp(3.2rem, 10vw, 9rem); line-height: 0.88; color: var(--bone); letter-spacing: 0.015em; }
+.hh .red { display: block; color: var(--blood); text-shadow: 0 0 80px rgba(196,30,30,0.25); }
+.hp { font-family: 'Crimson Pro', serif; font-size: clamp(1rem, 1.8vw, 1.2rem); font-weight: 300; color: var(--ghost); max-width: 520px; line-height: 1.75; margin-top: 2rem; }
+.hc { margin-top: 3rem; display: flex; gap: 1rem; flex-wrap: wrap; }
+.sa { position: absolute; bottom: 5vh; left: 50%; transform: translateX(-50%); display: flex; flex-direction: column; align-items: center; gap: 0.4rem; opacity: 0.3; animation: br 2.5s ease infinite; }
+.sa span { font-family: 'JetBrains Mono', monospace; font-size: 0.55rem; letter-spacing: 0.3em; }
+.sa i { display: block; width: 1px; height: 28px; background: linear-gradient(to bottom, var(--bone), transparent); }
+@keyframes br { 0%,100% { opacity: 0.3; } 50% { opacity: 0.7; } }
+
+/* LIE */
+#lie { background: var(--deep); padding-top: 15vh; padding-bottom: 15vh; }
+.lg { display: grid; grid-template-columns: 1fr 1.3fr; gap: 6vw; align-items: center; max-width: 1200px; }
+.sw { position: relative; display: flex; align-items: center; justify-content: center; aspect-ratio: 1; }
+.sd { width: 200px; height: 200px; background: linear-gradient(135deg, #f5d742, #e0bf1e); transform: rotate(45deg); display: flex; align-items: center; justify-content: center; box-shadow: 0 0 50px rgba(245,215,66,0.12); }
+.sd span { transform: rotate(-45deg); font-family: 'Bebas Neue', sans-serif; font-size: 1.2rem; color: #222; letter-spacing: 0.08em; text-align: center; line-height: 1.4; }
+.sx { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; }
+.sx::before, .sx::after { content: ''; position: absolute; width: 280px; height: 3px; background: var(--blood); }
+.sx::before { transform: rotate(45deg); } .sx::after { transform: rotate(-45deg); }
+.lt h2 { font-family: 'Playfair Display', serif; font-size: clamp(1.8rem, 3.5vw, 3rem); font-weight: 700; line-height: 1.2; color: var(--bone); margin-bottom: 1.8rem; }
+.lt h2 em { color: var(--blood); font-style: italic; }
+.lt p { font-size: clamp(0.95rem, 1.4vw, 1.1rem); line-height: 1.8; color: var(--ghost); font-weight: 300; margin-bottom: 1.2rem; }
+.lt .ac { color: var(--blood); font-weight: 600; font-style: italic; }
+
+/* STORY */
+#story { background: var(--noir); padding: 0; overflow: hidden; }
+.sh { text-align: center; padding: 12vh 8vw 4vh; }
+.sh h2 { font-family: 'Bebas Neue', sans-serif; font-size: clamp(2rem, 5vw, 4rem); color: var(--bone); letter-spacing: 0.04em; }
+.sh h2 span { color: var(--blood); }
+.sd2 { font-family: 'JetBrains Mono', monospace; font-size: 0.7rem; letter-spacing: 0.3em; color: var(--blood); text-align: center; margin-bottom: 3rem; }
+.sn { max-width: 750px; margin: 0 auto; padding: 0 8vw 6vh; }
+.sn p { font-family: 'Crimson Pro', serif; font-weight: 300; font-size: clamp(1.05rem, 1.6vw, 1.2rem); line-height: 1.9; color: var(--mist); margin-bottom: 1.8rem; }
+.sn strong { color: var(--bone); font-weight: 600; }
+.sn .bld { color: var(--blood); font-weight: 600; }
+.sfp { position: relative; max-width: 700px; margin: 0 auto 4rem; padding: 0 8vw; }
+.sfp img { width: 100%; display: block; filter: grayscale(0.1); border: 1px solid rgba(255,255,255,0.06); }
+.sfp .cap { font-family: 'Crimson Pro', serif; font-style: italic; font-weight: 300; font-size: 0.9rem; color: var(--ghost); text-align: center; margin-top: 1rem; line-height: 1.5; }
+.ws { background: var(--blood-dark); padding: 0.6rem 0; text-align: center; font-family: 'JetBrains Mono', monospace; font-size: 0.55rem; letter-spacing: 0.3em; color: rgba(255,255,255,0.6); text-transform: uppercase; }
+.se { background: #000; padding: 6vh 0; }
+.eg { display: grid; grid-template-columns: 1fr 1fr; max-width: 1000px; margin: 0 auto; gap: 2px; }
+.eg img { width: 100%; height: 100%; object-fit: cover; display: block; filter: brightness(0.85); transition: filter 0.3s; }
+.eg img:hover { filter: brightness(1); }
+.ec { text-align: center; padding: 2rem 8vw; font-family: 'JetBrains Mono', monospace; font-size: 0.6rem; letter-spacing: 0.25em; color: var(--ghost); text-transform: uppercase; }
+.sq { max-width: 700px; margin: 0 auto; padding: 6vh 8vw 10vh; position: relative; }
+.sq::before { content: '\201C'; font-family: 'Playfair Display', serif; font-size: 10rem; color: var(--blood); opacity: 0.1; position: absolute; top: 0; left: 5vw; line-height: 1; }
+.sq blockquote { font-family: 'Playfair Display', serif; font-style: italic; font-size: clamp(1.3rem, 2.5vw, 2rem); color: var(--bone); line-height: 1.5; border-left: 3px solid var(--blood); padding-left: 2rem; }
+.sq cite { display: block; margin-top: 1.5rem; font-family: 'JetBrains Mono', monospace; font-style: normal; font-size: 0.65rem; letter-spacing: 0.25em; color: var(--ghost); text-transform: uppercase; padding-left: 2rem; }
+.ic { text-align: center; padding: 6vh 8vw; background: linear-gradient(180deg, transparent, rgba(196,30,30,0.03)); }
+.ic p { font-family: 'Crimson Pro', serif; font-weight: 300; font-style: italic; font-size: clamp(1rem, 1.5vw, 1.15rem); color: var(--ghost); margin-bottom: 1.5rem; }
+
+/* STATS */
+#stats { background: var(--deep); text-align: center; padding: 14vh 8vw; }
+.sr { display: grid; grid-template-columns: repeat(4, 1fr); gap: 3rem; max-width: 1000px; margin: 3rem auto 0; }
+.st .nm { font-family: 'Bebas Neue', sans-serif; font-size: clamp(2.5rem, 5vw, 4.2rem); color: var(--bone); line-height: 1; }
+.st .nm .ac { color: var(--blood); }
+.st .tx { font-family: 'Crimson Pro', serif; font-weight: 300; font-size: 0.9rem; color: var(--ghost); margin-top: 0.5rem; line-height: 1.5; }
+.st .ln { width: 30px; height: 1px; background: var(--charcoal); margin: 0.8rem auto 0; }
+
+/* SOLUTION */
+#solution {
+  background: radial-gradient(ellipse at 50% 30%, rgba(212,168,83,0.03) 0%, transparent 50%), var(--noir);
+  padding: 14vh 8vw;
+}
+.slh { text-align: center; margin-bottom: 2rem; }
+.slh h2 { font-family: 'Bebas Neue', sans-serif; font-size: clamp(2.2rem, 5vw, 4rem); color: var(--bone); }
+.slh h2 span { color: var(--gold); }
+.sli { text-align: center; max-width: 600px; margin: 0 auto 2rem; font-family: 'Crimson Pro', serif; font-weight: 300; font-size: 1.05rem; color: var(--ghost); line-height: 1.7; }
+.stg {
+  display: flex; align-items: center; justify-content: center; gap: 0.6rem; cursor: pointer;
+  background: none; border: 1px solid rgba(255,255,255,0.1); color: var(--gold-light);
+  font-family: 'JetBrains Mono', monospace; font-size: 0.7rem; letter-spacing: 0.2em;
+  padding: 0.8rem 2rem; margin: 0 auto 3rem; transition: all 0.3s ease;
+}
+.stg:hover { border-color: var(--gold); background: rgba(212,168,83,0.05); }
+.stg .aw { display: inline-block; transition: transform 0.3s ease; }
+.stg.op .aw { transform: rotate(180deg); }
+.sld { max-height: 0; overflow: hidden; transition: max-height 0.6s cubic-bezier(0.16,1,0.3,1); }
+.sld.op { max-height: 800px; }
+.tg { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; max-width: 1000px; margin: 0 auto; }
+.tc {
+  background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.05);
+  padding: 2rem; position: relative; transition: border-color 0.3s, transform 0.3s;
+}
+.tc:hover { border-color: rgba(212,168,83,0.25); transform: translateY(-3px); }
+.tc::before { content: ''; position: absolute; top: 0; left: 0; width: 2px; height: 100%; background: linear-gradient(to bottom, var(--gold), transparent); }
+.tc h3 { font-family: 'Bebas Neue', sans-serif; font-size: 1.1rem; letter-spacing: 0.1em; color: var(--gold-light); margin-bottom: 0.6rem; }
+.tc p { font-family: 'Crimson Pro', serif; font-weight: 300; font-size: 0.9rem; line-height: 1.65; color: var(--ghost); }
+
+/* MISSION */
+#mission {
+  min-height: 70vh; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center;
+  background: radial-gradient(circle at 50% 50%, rgba(212,168,83,0.04) 0%, transparent 45%), var(--deep);
+  padding: 12vh 8vw;
+}
+.mw-wrap { display: flex; flex-direction: column; gap: 0.4rem; margin-bottom: 2.5rem; }
+.mw { font-family: 'Bebas Neue', sans-serif; font-size: clamp(2rem, 5vw, 4rem); letter-spacing: 0.12em; line-height: 1.15; }
+.mw:nth-child(1) { color: var(--bone); }
+.mw:nth-child(2) { color: var(--gold); }
+.mw:nth-child(3) { color: var(--blood); }
+.mp {
+  font-family: 'Crimson Pro', serif; font-weight: 300; font-size: clamp(1.05rem, 1.8vw, 1.25rem);
+  line-height: 1.8; color: var(--ghost); max-width: 600px;
+}
+.mp strong { color: var(--bone); font-weight: 600; }
+
+/* CTA */
+#cta {
+  min-height: 90vh; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center;
+  padding: 10vh 8vw;
+  background: radial-gradient(ellipse at 50% 80%, rgba(196,30,30,0.05) 0%, transparent 50%), var(--noir);
+}
+.cp { font-family: 'Bebas Neue', sans-serif; font-size: clamp(1.3rem, 2.5vw, 2rem); color: var(--bone); letter-spacing: 0.1em; }
+.ch { font-family: 'Bebas Neue', sans-serif; font-size: clamp(2.8rem, 7vw, 6rem); color: var(--blood); letter-spacing: 0.04em; text-shadow: 0 0 80px rgba(196,30,30,0.25); margin: 0.5rem 0 2rem; }
+.cs { font-family: 'Crimson Pro', serif; font-weight: 300; font-size: clamp(1rem, 1.4vw, 1.15rem); color: var(--ghost); max-width: 480px; line-height: 1.7; margin-bottom: 2.5rem; }
+
+/* SUBSCRIBE FORM */
+.sf { display: flex; flex-direction: column; gap: 0.7rem; width: 100%; max-width: 440px; }
+.sf input {
+  width: 100%; background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.1);
+  padding: 0.9rem 1.3rem; font-family: 'Crimson Pro', serif; font-size: 1rem; color: var(--bone);
+  outline: none; transition: border-color 0.3s, box-shadow 0.3s;
+}
+.sf input::placeholder { color: rgba(255,255,255,0.22); font-style: italic; }
+.sf input:focus { border-color: var(--gold); box-shadow: 0 0 25px rgba(212,168,83,0.08); }
+.snn { font-family: 'JetBrains Mono', monospace; font-size: 0.58rem; letter-spacing: 0.15em; color: rgba(255,255,255,0.18); margin-top: 0.3rem; text-align: center; }
+
+.sok { display: none; flex-direction: column; align-items: center; gap: 0.8rem; animation: fu 0.5s ease; }
+.sok .rng { width: 50px; height: 50px; border: 2px solid var(--gold); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.2rem; color: var(--gold); }
+.sok p { font-family: 'Crimson Pro', serif; color: var(--gold-light); font-size: 1.1rem; }
+.sok .sm { font-size: 0.9rem; color: var(--ghost); }
+@keyframes fu { from { opacity: 0; transform: translateY(15px); } to { opacity: 1; transform: none; } }
+
+/* HONEYPOT */
+.hp-field { position: absolute !important; width: 1px !important; height: 1px !important; padding: 0 !important; margin: -1px !important; overflow: hidden !important; clip: rect(0,0,0,0) !important; white-space: nowrap !important; border: 0 !important; }
+
+/* FORM ERROR */
+.sf .form-error { font-family: 'Crimson Pro', serif; font-size: 0.85rem; color: var(--blood-glow); text-align: center; min-height: 1.2em; }
+
+/* QUÉBEC */
+.qc { margin-top: 3.5rem; display: flex; flex-direction: column; align-items: center; gap: 0.3rem; opacity: 0.4; }
+.qc .fl { font-size: 1.3rem; }
+.qc span { font-family: 'JetBrains Mono', monospace; font-size: 0.55rem; letter-spacing: 0.3em; text-transform: uppercase; color: var(--ghost); }
+
+/* FOOTER */
+footer {
+  padding: 3vh 8vw; display: flex; justify-content: space-between; align-items: center;
+  border-top: 1px solid rgba(255,255,255,0.03); font-family: 'JetBrains Mono', monospace;
+  font-size: 0.55rem; letter-spacing: 0.2em; color: rgba(255,255,255,0.18);
+}
+footer a { color: var(--ghost); text-decoration: none; }
+footer a:hover { color: var(--gold); }
+
+/* FLOAT BAR */
+#fb {
+  position: fixed; bottom: 2.5vh; left: 0; right: 0; z-index: 400;
+  display: flex; justify-content: center; pointer-events: none;
+  transform: translateY(120%); transition: transform 0.5s cubic-bezier(0.16,1,0.3,1);
+}
+#fb.sh { transform: none; }
+.fi {
+  pointer-events: auto; display: flex; align-items: center; gap: 0.8rem;
+  background: rgba(10,10,10,0.92); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255,255,255,0.08); padding: 0.6rem 0.8rem 0.6rem 1.5rem;
+  box-shadow: 0 8px 40px rgba(0,0,0,0.6);
+}
+.fi .ft { font-family: 'Crimson Pro', serif; font-weight: 300; font-size: 0.9rem; color: var(--mist); white-space: nowrap; }
+.fi .ft strong { color: var(--bone); font-weight: 600; }
+.fi input {
+  background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.1);
+  padding: 0.55rem 1rem; font-family: 'Crimson Pro', serif; font-size: 0.85rem; color: var(--bone);
+  outline: none; width: 200px; transition: border-color 0.3s;
+}
+.fi input::placeholder { color: rgba(255,255,255,0.2); font-style: italic; }
+.fi input:focus { border-color: var(--gold); }
+.fi .btn { padding: 0.55rem 1.5rem; font-size: 0.85rem; }
+.fc { background: none; border: none; color: var(--ghost); font-size: 1rem; cursor: pointer; padding: 0.3rem; margin-left: 0.3rem; }
+.fc:hover { color: var(--bone); }
+
+/* POPUP */
+#mo {
+  position: fixed; inset: 0; background: rgba(0,0,0,0.8); backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px); z-index: 900; display: none; align-items: center;
+  justify-content: center; opacity: 0; transition: opacity 0.4s ease;
+}
+#mo.sh { display: flex; opacity: 1; }
+.mb {
+  background: var(--smoke); border: 1px solid rgba(255,255,255,0.08);
+  max-width: 460px; width: 90%; padding: 3rem 2.5rem; position: relative;
+  text-align: center; animation: mi 0.5s cubic-bezier(0.16,1,0.3,1);
+}
+@keyframes mi { from { opacity: 0; transform: scale(0.95) translateY(20px); } to { opacity: 1; transform: none; } }
+.mc { position: absolute; top: 1rem; right: 1.2rem; background: none; border: none; color: var(--ghost); font-size: 1.3rem; cursor: pointer; transition: color 0.2s; }
+.mc:hover { color: var(--bone); }
+.mb .mh { font-family: 'Bebas Neue', sans-serif; font-size: 2rem; color: var(--bone); letter-spacing: 0.05em; margin-bottom: 0.5rem; }
+.mb .mh span { color: var(--blood); }
+.mb .mpx { font-family: 'Crimson Pro', serif; font-weight: 300; font-size: 1rem; color: var(--ghost); line-height: 1.6; margin-bottom: 1.8rem; }
+.mb .sf { margin: 0 auto; }
+
+/* RESPONSIVE */
+@media (max-width: 768px) {
+  .lg { grid-template-columns: 1fr; gap: 3rem; }
+  .sw { max-width: 260px; margin: 0 auto; }
+  .sd { width: 150px; height: 150px; }
+  .sd span { font-size: 0.95rem; }
+  .sx::before, .sx::after { width: 200px; }
+  .eg { grid-template-columns: 1fr; }
+  .tg { grid-template-columns: 1fr; }
+  .sr { grid-template-columns: 1fr 1fr; gap: 2rem; }
+  .fi { flex-wrap: wrap; justify-content: center; padding: 0.8rem; }
+  .fi .ft { width: 100%; text-align: center; font-size: 0.8rem; }
+  .fi input { flex: 1; min-width: 0; }
+  section { padding: 8vh 6vw; }
+  .sn, .sfp, .sq { padding-left: 6vw; padding-right: 6vw; }
+}
+@media (max-width: 480px) {
+  .sr { grid-template-columns: 1fr; }
+  .hc { flex-direction: column; }
+  .hc .btn { text-align: center; }
+}
+</style>
+</head>
+<body>
+
+<div class="cb t"></div>
+<div class="cb b"></div>
+
+<!-- POPUP -->
+<div id="mo">
+  <div class="mb">
+    <button class="mc" onclick="cm()">&times;</button>
+    <div class="mh">NE RESTEZ PAS <span>SPECTATEUR.</span></div>
+    <p class="mpx">Rejoignez les premiers à dire &laquo;&nbsp;assez&nbsp;&raquo;. Acc&egrave;s prioritaire. Prix fondateur. Aucun spam.</p>
+    <div class="sf" id="mf">
+      <input type="email" placeholder="Votre courriel" id="me"/>
+      <input type="text" name="website" autocomplete="off" tabindex="-1" class="hp-field" id="mhp"/>
+      <button class="btn btn-r" style="width:100%" onclick="sm()">JE VEUX PROTÉGER LES MIENS</button>
+      <div class="form-error" id="merr"></div>
+    </div>
+    <div class="sok" id="mok">
+      <div class="rng">&#10003;</div>
+      <p>Bienvenue dans le mouvement.</p>
+    </div>
+  </div>
+</div>
+
+<!-- FLOAT BAR -->
+<div id="fb">
+  <div class="fi">
+    <span class="ft"><strong>Protégez</strong> ceux que vous aimez.</span>
+    <input type="email" placeholder="Votre courriel" id="fe"/>
+    <input type="text" name="company" autocomplete="off" tabindex="-1" class="hp-field" id="fhp"/>
+    <button class="btn btn-r" onclick="sf2()">SOUSCRIRE</button>
+    <button class="fc" onclick="cf()">&times;</button>
+  </div>
+</div>
+
+<!-- INTRO -->
+<div id="intro">
+  <div class="i1">Inspiré de faits réels</div>
+  <div class="i2">ILS VOUS ONT MENTI.</div>
+  <div class="i3"><svg viewBox="0 0 300 30"><path d="M0,15 L80,15 L95,15 L105,3 L115,27 L125,8 L133,18 L140,15 L300,15"/></svg></div>
+</div>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="r"><div class="ht">Un autocollant n'a jamais sauvé personne.</div></div>
+  <div class="r d1"><h1 class="hh">ARRÊTEZ DE<br>DEMANDER.<span class="red">COMMENCEZ À PROTÉGER.</span></h1></div>
+  <div class="r d2"><p class="hp">Un système de prévention des collisions arrière propulsé par l'intelligence artificielle. Né d'une tragédie réelle. Conçu à Montréal. Pour les familles que personne ne protège.</p></div>
+  <div class="r d3 hc">
+    <a href="#cta" class="btn btn-r">REJOINDRE LE MOUVEMENT</a>
+    <a href="#story" class="btn btn-g">VOIR L'HISTOIRE</a>
+  </div>
+  <div class="sa"><span>DÉFILER</span><i></i></div>
+</section>
+
+<!-- LIE -->
+<section id="lie">
+  <div class="lg">
+    <div class="sw r">
+      <div class="sd"><span>BABY<br>ON BOARD</span></div>
+      <div class="sx"></div>
+    </div>
+    <div class="lt">
+      <div class="label r">ACTE I — L'ILLUSION</div>
+      <h2 class="r">Pendant des décennies, on vous a dit que <em>cet autocollant</em> protégeait vos enfants.</h2>
+      <div class="bl r" style="margin:1.5rem 0"></div>
+      <p class="r">Il ne fait rien. C'est un symbole. Une prière collée sur un pare-chocs. Un espoir sans aucune technologie derrière.</p>
+      <p class="r">Pendant ce temps, des conducteurs distraits, fatigués, les yeux rivés sur leur téléphone, continuent de percuter des familles par l'arrière. Chaque jour.</p>
+      <p class="r ac">Et un jour, c'est arrivé pour vrai.</p>
+    </div>
+  </div>
+</section>
+
+<!-- STORY -->
+<section id="story">
+  <div class="sh r">
+    <div class="label" style="opacity:1;transform:none;color:var(--blood)">ACTE II — INSPIRÉ DE FAITS RÉELS</div>
+    <h2>UNE FAMILLE. <span>UN TÉLÉPHONE.</span><br>TOUT A BASCULÉ.</h2>
+  </div>
+  <div class="sd2 r">18 AVRIL 2022 — AUTOROUTE 401, ONTARIO, CANADA</div>
+  <div class="sfp r">
+    <img src="img/family.png" alt="Famille québécoise lors d'un voyage à Toronto" loading="lazy"/>
+    <div class="cap">Une famille de Laval profite d'un voyage à Toronto pendant le congé de Pâques. Les enfants ont visité l'aquarium, vu un match de hockey, ri ensemble. C'était leur dernier voyage.</div>
+  </div>
+  <div class="sn">
+    <p class="r">Sur le chemin du retour, sur l'autoroute 401, le trafic ralentit. Leur voiture s'immobilise dans la circulation. <strong>Derrière eux, un camion-remorque de 40 tonnes approche à 99&nbsp;km/h.</strong></p>
+    <p class="r">Le chauffeur ne regarde pas la route. <span class="bld">Il regarde son téléphone.</span> La dashcam le prouve. Les données le confirment. Il n'a jamais freiné.</p>
+    <p class="r">En une seconde, <strong>deux enfants et leur grand-mère</strong> ont perdu la vie. La mère a survécu. Elle a dû enterrer ses deux enfants et sa propre mère à cause de quelques secondes d'inattention.</p>
+    <p class="r">Le camionneur a reçu <span class="bld">5 ans</span>.</p>
+  </div>
+  <div class="ws">&#9888; IMAGES RÉELLES — PREUVE JUDICIAIRE</div>
+  <div class="se">
+    <div class="eg r">
+      <img src="img/dashcam.png" alt="Dashcam: chauffeur sur son téléphone à 99 km/h" loading="lazy"/>
+      <img src="img/truck.png" alt="Le camion impliqué" loading="lazy"/>
+      <img src="img/crash-car.png" alt="Véhicule familial après l'impact" loading="lazy"/>
+      <img src="img/crash-scene.png" alt="Scène de l'accident" loading="lazy"/>
+    </div>
+    <div class="ec">Dashcam du camion — 18 avril 2022, 19h30 EDT — 99 km/h, yeux sur le cellulaire</div>
+  </div>
+  <div class="sq r">
+    <blockquote>La technologie existait. Elle existait. Mais personne ne l'avait mise sur leur voiture.</blockquote>
+    <cite>— Notre conviction. La raison pour laquelle on a commencé à construire.</cite>
+  </div>
+  <div class="ic r">
+    <p>Si cette histoire vous touche, rejoignez ceux qui ont décidé que c'était assez.</p>
+    <a href="#cta" class="btn btn-r">JE REFUSE QUE ÇA SE RÉPÈTE</a>
+  </div>
+</section>
+
+<!-- STATS -->
+<section id="stats">
+  <div class="label r" style="color:var(--blood);text-align:center">ACTE III — LA RÉALITÉ QU'ON VOUS CACHE</div>
+  <div class="sr">
+    <div class="st r"><div class="nm"><span class="ctr" data-t="2500000">0</span></div><div class="tx">collisions arrière par an<br>en Amérique du Nord</div><div class="ln"></div></div>
+    <div class="st r d1"><div class="nm"><span class="ctr" data-t="950000">0</span></div><div class="tx">blessés graves<br>chaque année</div><div class="ln"></div></div>
+    <div class="st r d2"><div class="nm"><span class="ctr" data-t="90">0</span><span class="ac">%</span></div><div class="tx">causées par la distraction<br>ou l'inattention</div><div class="ln"></div></div>
+    <div class="st r d3"><div class="nm"><span class="ctr" data-t="0">0</span></div><div class="tx">systèmes de protection<br>arrière accessibles au public</div><div class="ln"></div></div>
+  </div>
+</section>
+
+<!-- SOLUTION -->
+<section id="solution">
+  <div class="slh r"><div class="label" style="opacity:1;text-align:center">NOTRE RÉPONSE</div><h2>NE DEMANDE <span>RIEN.</span> PROTÈGE <span>TOUT.</span></h2></div>
+  <p class="sli r">Un système embarqué qui détecte les véhicules en approche rapide par l'arrière, vous alerte et avertit le conducteur derrière vous par flash lumineux — avant l'impact.</p>
+  <button class="stg r" onclick="tt()"><span>VOIR LA TECHNOLOGIE</span><span class="aw">&#9660;</span></button>
+  <div class="sld" id="td">
+    <div class="tg">
+      <div class="tc"><h3>◉ VISION IA — YOLOV11</h3><p>Détection en temps réel des véhicules en approche rapide. Chaque image analysée en millisecondes par un réseau neuronal embarqué.</p></div>
+      <div class="tc"><h3>◎ RADAR DOPPLER — TI AWR1843</h3><p>Mesure la vitesse relative et la distance des véhicules derrière vous. Fonctionne dans le brouillard, la pluie, la nuit. Toujours.</p></div>
+      <div class="tc"><h3>⬡ FUSION MULTI-CAPTEURS</h3><p>Caméra + Radar + IA. Le système voit ce que l'humain ne voit pas. Alerte LED arrière + alerte sonore dans l'habitacle.</p></div>
+      <div class="tc"><h3>⬢ JETSON ORIN NANO</h3><p>Le cerveau du système. 40 TOPS de puissance IA dans un boîtier compact monté à l'arrière de votre véhicule.</p></div>
+    </div>
+  </div>
+  <div class="r" style="text-align:center;margin-top:3rem"><a href="#cta" class="btn btn-r">ÊTRE PARMI LES PREMIERS</a></div>
+</section>
+
+<!-- MISSION -->
+<section id="mission">
+  <div class="r">
+    <div class="mw-wrap">
+      <div class="mw">ONE HUMANITY</div>
+      <div class="mw">ONE PROJECT</div>
+      <div class="mw">ONE MISSION</div>
+    </div>
+    <div class="bl c" style="margin-bottom:2.5rem"></div>
+    <p class="mp">Ce projet est né de deux amis qui ont vu les images de cette famille décimée et de cet autocollant &laquo;&nbsp;Bébé à bord&nbsp;&raquo; qui ne protège personne.<br><br>On ne pouvait pas rester là à regarder. Alors on a construit ce que personne n'avait fait : un système de protection arrière accessible à <strong>tout le monde</strong>. Pas aux flottes. Pas au luxe. À chaque famille sur la route.</p>
+  </div>
+</section>
+
+<!-- CTA -->
+<section id="cta">
+  <div class="label r" style="opacity:1;transform:none">ÉPILOGUE — VOTRE CHOIX</div>
+  <div class="r">
+    <div class="cp">DEUX OPTIONS S'OFFRENT À VOUS</div>
+    <div class="ch">REJOIGNEZ LE MOUVEMENT.</div>
+    <p class="cs">Soyez parmi les premiers informés du lancement. Accès prioritaire. Prix fondateur. Et la certitude d'être du bon côté de l'histoire.</p>
+  </div>
+  <div class="sf r" id="cf2">
+    <input type="text" placeholder="Votre prénom" id="cn" autocomplete="given-name"/>
+    <input type="email" placeholder="Votre courriel" id="ce" autocomplete="email"/>
+    <input type="text" name="fax_number" autocomplete="off" tabindex="-1" class="hp-field" id="chp"/>
+    <button class="btn btn-r" style="width:100%" onclick="sc()">JE VEUX PROTÉGER LES MIENS</button>
+    <div class="form-error" id="cerr"></div>
+    <div class="snn">AUCUN SPAM. JAMAIS. ON EST TROP OCCUPÉS À SAUVER DES VIES.</div>
+  </div>
+  <div class="sok" id="cok">
+    <div class="rng">&#10003;</div>
+    <p>Bienvenue dans le mouvement.</p>
+    <p class="sm">Vous recevrez des nouvelles bientôt. Merci de croire en cette mission.</p>
+  </div>
+  <div class="qc r d2"><div class="fl">⚜</div><span>Conçu et fabriqué au Québec</span></div>
+</section>
+
+<footer>
+  <span>&copy; 2026 — ONE HUMANITY PROJECT</span>
+  <span>#ILSVOUSONTMENTI</span>
+  <a href="#cta">SOUSCRIRE</a>
+</footer>
+
+<script>
+// === HELPERS ===
+function getErrorMessage(code) {
+  const messages = {
+    INVALID_EMAIL: 'Courriel invalide.',
+    RATE_LIMITED: 'Trop de tentatives. Réessayez dans une minute.',
+    FORBIDDEN: 'Requête non autorisée.',
+    SERVER_ERROR: 'Erreur serveur. Réessayez plus tard.',
+    NETWORK_ERROR: 'Erreur réseau. Vérifiez votre connexion.',
+  };
+  return messages[code] || 'Une erreur est survenue. Réessayez.';
+}
+
+function setLoading(btn, loading) {
+  if (loading) {
+    btn.dataset.originalText = btn.textContent;
+    btn.textContent = 'ENVOI EN COURS...';
+    btn.disabled = true;
+    btn.style.opacity = '0.6';
+  } else {
+    btn.textContent = btn.dataset.originalText || btn.textContent;
+    btn.disabled = false;
+    btn.style.opacity = '';
+  }
+}
+
+function showError(errEl, msg) {
+  errEl.textContent = msg;
+  setTimeout(() => { errEl.textContent = ''; }, 5000);
+}
+
+async function sv(email, name, hp) {
+  if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(email)) {
+    return { ok: false, code: 'INVALID_EMAIL' };
+  }
+  try {
+    const res = await fetch('/api/subscribe', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ email, name: name || '', _hp: hp || '' }),
+    });
+    const data = await res.json();
+    if (!res.ok) return { ok: false, code: data.code || 'SERVER_ERROR' };
+    return { ok: true };
+  } catch (e) {
+    return { ok: false, code: 'NETWORK_ERROR' };
+  }
+}
+
+// === INTRO ===
+setTimeout(() => document.getElementById('intro').classList.add('gone'), 5800);
+
+// === REVEAL ===
+const io = new IntersectionObserver(e => {
+  e.forEach(x => { if (x.isIntersecting) x.target.classList.add('v'); });
+}, { threshold: .12, rootMargin: '0px 0px -40px 0px' });
+document.querySelectorAll('.r').forEach(el => io.observe(el));
+
+// === COUNTERS ===
+function rc() {
+  document.querySelectorAll('.ctr').forEach(c => {
+    if (c.dataset.d) return;
+    c.dataset.d = '1';
+    const t = +c.dataset.t;
+    if (t === 0) { c.textContent = '0'; return; }
+    const dur = 2200, s = performance.now();
+    (function k(n) {
+      const p = Math.min((n - s) / dur, 1), e = 1 - Math.pow(1 - p, 3);
+      const v = Math.floor(e * t);
+      c.textContent = v >= 1e3 ? v.toLocaleString('fr-CA') : v;
+      if (p < 1) requestAnimationFrame(k);
+    })(s);
+  });
+}
+const sio = new IntersectionObserver(e => {
+  e.forEach(x => { if (x.isIntersecting) rc(); });
+}, { threshold: .25 });
+const stEl = document.getElementById('stats');
+if (stEl) sio.observe(stEl);
+
+// === TECH TOGGLE ===
+function tt() {
+  document.getElementById('td').classList.toggle('op');
+  document.querySelector('.stg').classList.toggle('op');
+}
+
+// === FLOAT BAR ===
+let fbc = false, fbs = false;
+async function sf2() {
+  const emailInput = document.getElementById('fe');
+  const email = emailInput.value.trim();
+  const hp = document.getElementById('fhp').value;
+  const btn = document.querySelector('.fi .btn');
+  setLoading(btn, true);
+  const result = await sv(email, '', hp);
+  setLoading(btn, false);
+  if (result.ok) {
+    document.querySelector('.fi .ft').innerHTML = '<strong>Merci.</strong> Bienvenue.';
+    emailInput.style.display = 'none';
+    btn.style.display = 'none';
+    setTimeout(cf, 3000);
+  } else {
+    emailInput.style.borderColor = 'var(--blood)';
+    // Brief inline feedback for float bar
+    const origPlaceholder = emailInput.placeholder;
+    emailInput.value = '';
+    emailInput.placeholder = getErrorMessage(result.code);
+    setTimeout(() => { emailInput.placeholder = origPlaceholder; emailInput.style.borderColor = ''; }, 3000);
+  }
+}
+function cf() { document.getElementById('fb').classList.remove('sh'); fbc = true; }
+window.addEventListener('scroll', () => {
+  if (!fbc && !fbs && scrollY > innerHeight * 0.8) {
+    document.getElementById('fb').classList.add('sh');
+    fbs = true;
+  }
+}, { passive: true });
+
+// === MODAL ===
+let ms = false;
+function om() {
+  if (ms) return;
+  ms = true;
+  const m = document.getElementById('mo');
+  m.style.display = 'flex';
+  requestAnimationFrame(() => m.classList.add('sh'));
+}
+function cm() {
+  const m = document.getElementById('mo');
+  m.classList.remove('sh');
+  setTimeout(() => m.style.display = 'none', 400);
+}
+async function sm() {
+  const emailInput = document.getElementById('me');
+  const email = emailInput.value.trim();
+  const hp = document.getElementById('mhp').value;
+  const btn = document.querySelector('#mf .btn');
+  const errEl = document.getElementById('merr');
+  setLoading(btn, true);
+  const result = await sv(email, '', hp);
+  setLoading(btn, false);
+  if (result.ok) {
+    document.getElementById('mf').style.display = 'none';
+    document.getElementById('mok').style.display = 'flex';
+    setTimeout(cm, 2500);
+  } else {
+    emailInput.style.borderColor = 'var(--blood)';
+    showError(errEl, getErrorMessage(result.code));
+  }
+}
+const sto = new IntersectionObserver(e => {
+  e.forEach(x => { if (x.isIntersecting && !ms) setTimeout(om, 2500); });
+}, { threshold: .3 });
+const snEl = document.querySelector('.sn');
+if (snEl) sto.observe(snEl);
+document.getElementById('mo').addEventListener('click', function(e) { if (e.target === this) cm(); });
+document.addEventListener('keydown', e => { if (e.key === 'Escape') cm(); });
+
+// === CTA FORM ===
+async function sc() {
+  const nameInput = document.getElementById('cn');
+  const emailInput = document.getElementById('ce');
+  const name = nameInput.value.trim();
+  const email = emailInput.value.trim();
+  const hp = document.getElementById('chp').value;
+  const btn = document.querySelector('#cf2 .btn');
+  const errEl = document.getElementById('cerr');
+  setLoading(btn, true);
+  const result = await sv(email, name, hp);
+  setLoading(btn, false);
+  if (result.ok) {
+    document.getElementById('cf2').style.display = 'none';
+    document.getElementById('cok').style.display = 'flex';
+  } else {
+    emailInput.style.borderColor = 'var(--blood)';
+    emailInput.focus();
+    showError(errEl, getErrorMessage(result.code));
+  }
+}
+</script>
+</body>
+</html>
