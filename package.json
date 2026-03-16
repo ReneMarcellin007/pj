@@ -5,5 +5,8 @@
   "description": "Landing page — Système de prévention des collisions arrière propulsé par l'IA",
   "dependencies": {
     "resend": "^4.1.0"
+  },
+  "devDependencies": {
+    "sharp": "^0.34.5"
   }
 }
