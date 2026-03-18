@@ -253,6 +253,19 @@
 </footer>
 
 <script>
+// === SUBSCRIBED CHECK ===
+let fbc = false, fbs = false, ms = false;
+if (localStorage.getItem('pj_subscribed')) {
+  ms = true;
+  fbc = true;
+  document.addEventListener('DOMContentLoaded', () => {
+    const cf2 = document.getElementById('cf2');
+    const cok = document.getElementById('cok');
+    if (cf2) cf2.style.display = 'none';
+    if (cok) cok.style.display = 'flex';
+  });
+}
+
 // === HELPERS ===
 function getErrorMessage(code) {
   const messages = {
@@ -305,14 +318,16 @@ async function sv(email, name, hp) {
 setTimeout(() => document.getElementById('intro').classList.add('gone'), 3800);
 
 // === REVEAL ===
+const revealEls = document.querySelectorAll('.r');
 const io = new IntersectionObserver(e => {
-  e.forEach(x => { if (x.isIntersecting) x.target.classList.add('v'); });
+  e.forEach(x => { if (x.isIntersecting) { x.target.classList.add('v'); io.unobserve(x.target); } });
 }, { threshold: .12, rootMargin: '0px 0px -40px 0px' });
-document.querySelectorAll('.r').forEach(el => io.observe(el));
+revealEls.forEach(el => io.observe(el));
 
 // === COUNTERS ===
+const counterEls = document.querySelectorAll('.ctr');
 function rc() {
-  document.querySelectorAll('.ctr').forEach(c => {
+  counterEls.forEach(c => {
     if (c.dataset.d) return;
     c.dataset.d = '1';
     const t = +c.dataset.t;
@@ -326,16 +341,20 @@ function rc() {
     })(s);
   });
 }
-const sio = new IntersectionObserver(e => {
-  e.forEach(x => { if (x.isIntersecting) rc(); });
-}, { threshold: .25 });
 const stEl = document.getElementById('stats');
-if (stEl) sio.observe(stEl);
+if (stEl) {
+  const sio = new IntersectionObserver(e => {
+    e.forEach(x => { if (x.isIntersecting) { rc(); sio.unobserve(x.target); } });
+  }, { threshold: .25 });
+  sio.observe(stEl);
+}
 
 // === TECH TOGGLE ===
+const tdEl = document.getElementById('td');
+const stgEl = document.querySelector('.stg');
 function tt() {
-  document.getElementById('td').classList.toggle('op');
-  document.querySelector('.stg').classList.toggle('op');
+  tdEl.classList.toggle('op');
+  stgEl.classList.toggle('op');
 }
 
 // === FAQ TOGGLE ===
@@ -344,7 +363,6 @@ function tfi(btn) {
 }
 
 // === FLOAT BAR ===
-let fbc = false, fbs = false;
 async function sf2() {
   const emailInput = document.getElementById('fe');
   const email = emailInput.value.trim();
@@ -354,6 +372,7 @@ async function sf2() {
   const result = await sv(email, '', hp);
   setLoading(btn, false);
   if (result.ok) {
+    localStorage.setItem('pj_subscribed', '1');
     document.querySelector('.fi .ft').innerHTML = '<strong>Thank you.</strong> Welcome.';
     emailInput.style.display = 'none';
     btn.style.display = 'none';
@@ -375,18 +394,16 @@ window.addEventListener('scroll', () => {
 }, { passive: true });
 
 // === MODAL ===
-let ms = false;
+const moEl = document.getElementById('mo');
 function om() {
   if (ms) return;
   ms = true;
-  const m = document.getElementById('mo');
-  m.style.display = 'flex';
-  requestAnimationFrame(() => m.classList.add('sh'));
+  moEl.style.display = 'flex';
+  requestAnimationFrame(() => moEl.classList.add('sh'));
 }
 function cm() {
-  const m = document.getElementById('mo');
-  m.classList.remove('sh');
-  setTimeout(() => m.style.display = 'none', 400);
+  moEl.classList.remove('sh');
+  setTimeout(() => moEl.style.display = 'none', 400);
 }
 async function sm() {
   const emailInput = document.getElementById('me');
@@ -398,6 +415,7 @@ async function sm() {
   const result = await sv(email, '', hp);
   setLoading(btn, false);
   if (result.ok) {
+    localStorage.setItem('pj_subscribed', '1');
     document.getElementById('mf').style.display = 'none';
     document.getElementById('mok').style.display = 'flex';
     setTimeout(cm, 2500);
@@ -406,12 +424,14 @@ async function sm() {
     showError(errEl, getErrorMessage(result.code));
   }
 }
-const sto = new IntersectionObserver(e => {
-  e.forEach(x => { if (x.isIntersecting && !ms) setTimeout(om, 2500); });
-}, { threshold: .3 });
 const snEl = document.querySelector('.sn');
-if (snEl) sto.observe(snEl);
-document.getElementById('mo').addEventListener('click', function(e) { if (e.target === this) cm(); });
+if (snEl) {
+  const sto = new IntersectionObserver(e => {
+    e.forEach(x => { if (x.isIntersecting && !ms) { setTimeout(om, 2500); sto.unobserve(x.target); } });
+  }, { threshold: .3 });
+  sto.observe(snEl);
+}
+moEl.addEventListener('click', function(e) { if (e.target === this) cm(); });
 document.addEventListener('keydown', e => { if (e.key === 'Escape') cm(); });
 
 // === CTA FORM ===
@@ -427,6 +447,7 @@ async function sc() {
   const result = await sv(email, name, hp);
   setLoading(btn, false);
   if (result.ok) {
+    localStorage.setItem('pj_subscribed', '1');
     document.getElementById('cf2').style.display = 'none';
     document.getElementById('cok').style.display = 'flex';
   } else {
